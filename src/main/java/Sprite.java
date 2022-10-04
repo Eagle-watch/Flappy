@@ -4,11 +4,25 @@ public abstract class Sprite  {
 
     protected int x;
     protected int y;
-    protected Color Couleur;
+    protected Color couleur;
 
-    
+    public Sprite(int x, int y, Color couleur) {
+        this.x = x;
+        this.y = y;
+        this.couleur = couleur;
+    }
+
+    public Sprite(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.couleur = Color.RED;
+    }
 
     public abstract void dessiner (Graphics2D dessin);
+
+    public abstract int getCentrex();
+    public abstract int getCentrey();
+
 
     public int getX() {
         return x;
@@ -27,10 +41,10 @@ public abstract class Sprite  {
     }
 
     public Color getCouleur() {
-        return Couleur;
+        return couleur;
     }
 
     public void setCouleur(Color couleur) {
-        Couleur = couleur;
+        this.couleur = couleur;
     }
 }
