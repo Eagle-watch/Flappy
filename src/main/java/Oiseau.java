@@ -50,6 +50,8 @@ public class Oiseau extends Carre implements Deplacable{
 
     public void sauter() {
 
+        vitesseVertical = 2 ;
+
     }
 
     public float getVitesseVertical() {

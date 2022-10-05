@@ -12,10 +12,12 @@ public class Flappy extends Canvas implements KeyListener {
     protected boolean pause = false;
 
     protected Oiseau oiseau;
-    protected Tuyau tuyau;
+
 
     protected ArrayList<Deplacable> listeDeplacable = new ArrayList<>();
     protected ArrayList<Sprite> listeSprite = new ArrayList<>();
+
+    protected ArrayList<Tuyau> listeTuyau = new ArrayList<>();
 
     public Flappy() throws InterruptedException {
 
@@ -25,8 +27,8 @@ public class Flappy extends Canvas implements KeyListener {
         //On définie la hauteur / largeur de l'écran
 
 
-        panneau.setPreferredSize(new Dimension(largeurEcran, this.hauteurEcran));
-        setBounds(0, 0, this.largeurEcran,this.hauteurEcran);
+        panneau.setPreferredSize(new Dimension(largeurEcran, hauteurEcran));
+        setBounds(0, 0, largeurEcran, hauteurEcran);
         //On ajoute cette classe (qui hérite de Canvas) comme composant du panneau principal
         panneau.add(this);
 
@@ -45,33 +47,41 @@ public class Flappy extends Canvas implements KeyListener {
 
         this.demarrer();
     }
+
     public void initialiser() {
 
         pause = false;
 
         //si c'est la première initialisation
-        if(oiseau == null) {
+        if (oiseau == null) {
             oiseau = new Oiseau(hauteurEcran);
-            tuyau = new Tuyau(200, hauteurEcran, largeurEcran);
-//            Nuage nuage = new Nuage(largeurEcran,  hauteurEcran);
-            listeDeplacable.add(tuyau);
             listeDeplacable.add(oiseau);
 //            listeDeplacable.add(nuage);
 
-            listeSprite.add(tuyau);
             listeSprite.add(oiseau);
 //            listeSprite.add(nuage);
 
+
+//           ajout tuyau
+
+            for (int i = 0; i < 5; i++) {
+
+                Tuyau tuyau = new Tuyau(200, hauteurEcran, largeurEcran);
+                listeTuyau.add(tuyau);
+                listeDeplacable.add(tuyau);
+                listeSprite.add(tuyau);
+
+            }
             //ajout nuages
-            for(int i = 0; i< 50; i ++){
-                Nuage nuage = new Nuage(largeurEcran,  hauteurEcran);
+            for (int i = 0; i < 50; i++) {
+                Nuage nuage = new Nuage(largeurEcran, hauteurEcran);
                 listeDeplacable.add(nuage);
                 listeSprite.add(nuage);
             }
 
         } else {
-            for(Deplacable deplacable : listeDeplacable) {
-                deplacable.reinitialiser(largeurEcran,hauteurEcran);
+            for (Deplacable deplacable : listeDeplacable) {
+                deplacable.reinitialiser(largeurEcran, hauteurEcran);
             }
         }
     }
@@ -82,21 +92,21 @@ public class Flappy extends Canvas implements KeyListener {
 
         initialiser();
 
-        while(true) {
+        while (true) {
 
-            indexFrame ++;
+            indexFrame++;
             Graphics2D dessin = (Graphics2D) getBufferStrategy().getDrawGraphics();
 
             //-----------------------------
             //reset dessin
             dessin.setColor(Color.WHITE);
-            dessin.fillRect(0,0,largeurEcran,hauteurEcran);
+            dessin.fillRect(0, 0, largeurEcran, hauteurEcran);
 
-            for(Sprite sprite : listeSprite) {
+            for (Sprite sprite : listeSprite) {
                 sprite.dessiner(dessin);
             }
 
-            if(!pause) {
+            if (!pause) {
                 //-----si jamais l'oiseau est tombé par terre ---
                 if (oiseau.getY() > hauteurEcran - oiseau.getLargeur()) {
                     System.out.println("perdu");
@@ -106,13 +116,22 @@ public class Flappy extends Canvas implements KeyListener {
 //                    oiseau.deplacer();
 //                    tuyau.deplacer();
 
-                    for(Deplacable deplacable : listeDeplacable) {
+                    for (Deplacable deplacable : listeDeplacable) {
                         deplacable.deplacer(largeurEcran, hauteurEcran);
                     }
+                    for (Tuyau tuyau : listeTuyau) {
+
+                        if (Sprite.testCollision(oiseau, tuyau)) {
+                            System.out.println("perdu");
+                            pause = true;
+
+                        }
+                    }
+
                 }
             } else {
-                dessin.setColor(new Color(0,0,0,0.1f));
-                dessin.fillRect(0,0,largeurEcran,hauteurEcran);
+                dessin.setColor(new Color(0, 0, 0, 0.1f));
+                dessin.fillRect(0, 0, largeurEcran, hauteurEcran);
             }
             //-----------------------------
             dessin.dispose();
@@ -137,15 +156,15 @@ public class Flappy extends Canvas implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_SPACE){
-            oiseau.setVitesseVertical(2);
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            oiseau.sauter();
         }
 
-        if(e.getKeyCode() == KeyEvent.VK_ENTER){
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             initialiser();
         }
 
-        if(e.getKeyCode() == KeyEvent.VK_P){
+        if (e.getKeyCode() == KeyEvent.VK_P) {
             //inverser un booléen
             pause = !pause;
         }
