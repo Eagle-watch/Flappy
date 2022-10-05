@@ -1,7 +1,6 @@
 import java.awt.*;
 
-public abstract class Sprite  {
-
+public abstract class Sprite {
     protected int x;
     protected int y;
     protected Color couleur;
@@ -18,11 +17,10 @@ public abstract class Sprite  {
         this.couleur = Color.RED;
     }
 
-    public abstract void dessiner (Graphics2D dessin);
+    public abstract void dessiner(Graphics2D dessin);
 
-    public abstract int getCentrex();
-    public abstract int getCentrey();
-
+    public abstract int getCentreX();
+    public abstract int getCentreY();
 
     public int getX() {
         return x;

@@ -2,21 +2,21 @@ import java.awt.*;
 
 public abstract class Rectangle extends Carre {
 
-    protected int hauteur ;
+    protected int hauteur;
 
-    public Rectangle(int x, int y, int largeur, int hauteur ,Color couleur ) {
+    public Rectangle(int x, int y, int largeur, int hauteur, Color couleur) {
         super(x, y, largeur, couleur);
         this.hauteur = hauteur;
     }
 
     public Rectangle(int x, int y, int largeur, int hauteur) {
-        super(x, y, largeur,Color.GREEN);
+        super(x, y, largeur, Color.GREEN);
         this.hauteur = hauteur;
     }
 
     @Override
-    public int getCentrey() {
-        return hauteur/2;
+    public int getCentreY() {
+        return hauteur / 2;
     }
 
     public int getHauteur() {

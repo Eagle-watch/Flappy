@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Tuyau extends Rectangle implements Deplassable {
+public class Tuyau extends Rectangle implements Deplacable {
 
     public Tuyau(int hauteur, int hauteurEcran, int largeurEcran) {
         super(largeurEcran   - 100  , hauteurEcran-hauteur, 100, hauteur);
@@ -15,15 +15,11 @@ public class Tuyau extends Rectangle implements Deplassable {
     }
 
     @Override
-    public void deplacer() {
-
+    public void deplacer(int largeurEcran, int hauteurEcran) {
         x -= 1;
-
     }
 
-    public void reinitialiser (int largeurEcran) {
-
+    public void reinitialiser(int largeurEcran, int hauteurEcran) {
         x = largeurEcran;
-
     }
 }

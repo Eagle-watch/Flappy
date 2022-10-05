@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Oiseau extends Carre implements Deplassable {
+public class Oiseau extends Carre implements Deplacable{
 
     protected float vitesseVertical;
 
@@ -11,22 +11,26 @@ public class Oiseau extends Carre implements Deplassable {
         this.vitesseVertical = 0;
     }
 
-    public Oiseau (int hauteurEcran) {
-        super(50,0, HAUTEUR_OISEAU );
-        reintialiser(hauteurEcran);
+    public Oiseau(int hauteurEcran) {
+        super(50, 0, HAUTEUR_OISEAU);
+        reinitialiser(0, hauteurEcran);
         this.vitesseVertical = 0;
     }
 
-    public void reintialiser(int hauteurEcran) {
 
-        y= hauteurEcran / 2 - HAUTEUR_OISEAU /2;
+    public void reinitialiser(int largeurEcran, int hauteurEcran) {
+        y = hauteurEcran / 2 - HAUTEUR_OISEAU / 2;
         vitesseVertical = 0;
-
     }
 
     @Override
-    public  void deplacer() {
+    public void dessiner(Graphics2D dessin) {
+        dessin.setColor(couleur);
+        dessin.fillRect(x,y,largeur,largeur);
+    }
 
+    @Override
+    public void deplacer(int largeurEcran, int hauteurEcran) {
 
         //petite correction de la gravité, pour eviter un temps de flotement
         //si la vitesse est comprise entre -O,1 et -0,9
@@ -44,20 +48,7 @@ public class Oiseau extends Carre implements Deplassable {
         }
     }
 
-    public void collision() {
-
-
-
-    }
-    @Override
-    public void dessiner(Graphics2D dessin) {
-
-        dessin.setColor(couleur);
-        dessin.fillRect(x,y,largeur,largeur);
-
-    }
-
-    public void sauter () {
+    public void sauter() {
 
     }
 
